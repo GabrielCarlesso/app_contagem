@@ -1,6 +1,6 @@
 import 'package:app_contagem/AppController.dart';
 import 'package:flutter/material.dart';
-import 'MyHomePage.dart';
+import 'Screens/MyMainPage.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,14 +11,14 @@ class MyApp extends StatelessWidget {
       animation: AppController.instance,
       builder: (context, child) {
         return MaterialApp(
-            title: 'Fluxu RU',
+            title: 'Fluxu RU 2',
             theme: ThemeData(
               primarySwatch: Colors.blue,
               brightness: AppController.instance.isDarkTheme
                   ? Brightness.dark
                   : Brightness.light,
             ),
-            home: const MyHomePage(title: 'Fluxo RU'));
+            home: const MyMainPage(title: 'Fluxo RU 2'));
       },
     );
   }
