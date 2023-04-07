@@ -22,36 +22,45 @@ class _MyPageMonthlyGraph extends State<PageMonthlyGraph> {
     return Scaffold(
         body: Center(
       child: SfCartesianChart(
-        title: ChartTitle(text: "Fluxo"),
+        title: ChartTitle(text: "Titulo"),
         primaryXAxis: CategoryAxis(),
         series: <ChartSeries>[
           StackedColumnSeries<ChartData, String>(
             dataSource: _chartData,
             xValueMapper: (ChartData data, _) => data.dayOfWeek,
             yValueMapper: (ChartData data, _) => data.manha,
-            dataLabelSettings:
-                DataLabelSettings(isVisible: true, showCumulativeValues: true),
+            dataLabelSettings: DataLabelSettings(
+                isVisible: true,
+                labelAlignment: ChartDataLabelAlignment.middle,
+                showCumulativeValues: true,
+                textStyle: TextStyle(fontSize: 12, color: Colors.black)),
           ),
           StackedColumnSeries<ChartData, String>(
             dataSource: _chartData,
             xValueMapper: (ChartData data, _) => data.dayOfWeek,
             yValueMapper: (ChartData data, _) => data.meioDia,
-            dataLabelSettings:
-                DataLabelSettings(isVisible: true, showCumulativeValues: true),
+            dataLabelSettings: DataLabelSettings(
+                isVisible: true,
+                labelAlignment: ChartDataLabelAlignment.middle,
+                showCumulativeValues: true),
           ),
           StackedColumnSeries<ChartData, String>(
             dataSource: _chartData,
             xValueMapper: (ChartData data, _) => data.dayOfWeek,
             yValueMapper: (ChartData data, _) => data.tarde,
-            dataLabelSettings:
-                DataLabelSettings(isVisible: true, showCumulativeValues: true),
+            dataLabelSettings: DataLabelSettings(
+                isVisible: true,
+                labelAlignment: ChartDataLabelAlignment.middle,
+                showCumulativeValues: true),
           ),
           StackedColumnSeries<ChartData, String>(
             dataSource: _chartData,
             xValueMapper: (ChartData data, _) => data.dayOfWeek,
             yValueMapper: (ChartData data, _) => data.noite,
-            dataLabelSettings:
-                DataLabelSettings(isVisible: true, showCumulativeValues: true),
+            dataLabelSettings: DataLabelSettings(
+                isVisible: true,
+                labelAlignment: ChartDataLabelAlignment.middle,
+                showCumulativeValues: true),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:app_contagem/AppController.dart';
+import 'package:app_contagem/Screens/DiarioPage.dart';
 import 'package:app_contagem/Screens/HomePage.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,7 @@ class _MyMainPageState extends State<MyMainPage> {
           children: [
             HomePage(),
             PageMonthlyGraph(),
-            Container(color: Colors.green),
+            DiarioPage(),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
