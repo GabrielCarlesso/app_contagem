@@ -1,22 +1,24 @@
 import 'package:http/http.dart' as http;
-import 'FluxoPorTurno.dart';
+import 'FluxoPorTurnoDiario.dart';
 
 class Services {
-  int dia = 6;
-
-  Future<List<FluxoPorTurno>> getFluxo() async {
+  Future<FluxoPorTurnoDiario> getFluxo(DateTime date) async {
     try {
       final response = await http.get(Uri.parse(
-          'https://contagem.ceolin.org:8443/contagens/diario/8/${dia}/10/2022'));
+          'https://contagem.ceolin.org:8443/contagens/diario/8/${date.day}/${date.month}/${date.year}'));
       if (200 == response.statusCode) {
         // If the server did return a 200 OK response,
-        final List<FluxoPorTurno> data = fluxoPorTurnoFromJson(response.body);
+        final FluxoPorTurnoDiario data =
+            FluxoPorTurnoDiario.fromJson(response.body);
         return data;
       } else {
-        return List<FluxoPorTurno>.empty();
+        print('Erro: Response StatusCode: ${response.statusCode}');
+        return FluxoPorTurnoDiario(nomeTurno: [], fluxo: [], cor: []);
       }
     } catch (e) {
-      return List<FluxoPorTurno>.empty();
+      print(e);
+
+      return FluxoPorTurnoDiario(nomeTurno: [], fluxo: [], cor: []);
     }
   }
 }
