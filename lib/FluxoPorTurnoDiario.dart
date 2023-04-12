@@ -1,14 +1,18 @@
 import 'dart:convert';
 
 class FluxoPorTurnoDiario {
+  final DateTime date;
   final List<String> nomeTurno;
   final List<int> fluxo;
   final List<String> cor;
 
   FluxoPorTurnoDiario(
-      {required this.nomeTurno, required this.fluxo, required this.cor});
+      {required this.nomeTurno,
+      required this.fluxo,
+      required this.cor,
+      required this.date});
 
-  factory FluxoPorTurnoDiario.fromJson(String jsonData) {
+  factory FluxoPorTurnoDiario.fromJson(String jsonData, DateTime day) {
     var objJson = json.decode(jsonData);
     List<String> listaTurno = [];
     List<int> listaFluxo = [];
@@ -24,6 +28,7 @@ class FluxoPorTurnoDiario {
       nomeTurno: listaTurno,
       fluxo: listaFluxo,
       cor: listaCor,
+      date: day,
     );
   }
 }

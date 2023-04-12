@@ -9,16 +9,29 @@ class Services {
       if (200 == response.statusCode) {
         // If the server did return a 200 OK response,
         final FluxoPorTurnoDiario data =
-            FluxoPorTurnoDiario.fromJson(response.body);
+            FluxoPorTurnoDiario.fromJson(response.body, date);
         return data;
       } else {
         print('Erro: Response StatusCode: ${response.statusCode}');
-        return FluxoPorTurnoDiario(nomeTurno: [], fluxo: [], cor: []);
+        return FluxoPorTurnoDiario(
+            nomeTurno: [], fluxo: [], cor: [], date: date);
       }
     } catch (e) {
       print(e);
 
-      return FluxoPorTurnoDiario(nomeTurno: [], fluxo: [], cor: []);
+      return FluxoPorTurnoDiario(nomeTurno: [], fluxo: [], cor: [], date: date);
     }
+  }
+
+  Future<List<FluxoPorTurnoDiario>> getFluxoMensal(DateTime date) async {
+    List<FluxoPorTurnoDiario> fluxoMensal = [];
+
+    DateTime auxDate = DateTime(date.year, date.month, 01);
+
+    for (int day = 1; day <= 31; day++) {
+      auxDate = DateTime(date.year, date.month, day);
+      fluxoMensal.add(await Services().getFluxo(auxDate));
+    }
+    return fluxoMensal;
   }
 }

@@ -1,5 +1,8 @@
+import 'package:app_contagem/FluxoPorTurnoDiario.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import '../Services.dart';
 
 class PageMonthlyGraph extends StatefulWidget {
   const PageMonthlyGraph({super.key});
@@ -9,82 +12,106 @@ class PageMonthlyGraph extends StatefulWidget {
 }
 
 class _MyPageMonthlyGraph extends State<PageMonthlyGraph> {
-  late List<ChartData> _chartData;
+  late Future<List<FluxoPorTurnoDiario>> fluxoMensal;
+
+  late List<ChartData> _chartData = [];
 
   @override
   void initState() {
-    _chartData = getChartData();
+    fluxoMensal = Services().getFluxoMensal(DateTime.parse('2022-10-02'));
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: SfCartesianChart(
-        title: ChartTitle(text: "Titulo"),
-        primaryXAxis: CategoryAxis(),
-        series: <ChartSeries>[
-          StackedColumnSeries<ChartData, String>(
-            dataSource: _chartData,
-            xValueMapper: (ChartData data, _) => data.dayOfWeek,
-            yValueMapper: (ChartData data, _) => data.manha,
-            dataLabelSettings: DataLabelSettings(
-                isVisible: true,
-                labelAlignment: ChartDataLabelAlignment.middle,
-                showCumulativeValues: true,
-                textStyle: TextStyle(fontSize: 12, color: Colors.black)),
-          ),
-          StackedColumnSeries<ChartData, String>(
-            dataSource: _chartData,
-            xValueMapper: (ChartData data, _) => data.dayOfWeek,
-            yValueMapper: (ChartData data, _) => data.meioDia,
-            dataLabelSettings: DataLabelSettings(
-                isVisible: true,
-                labelAlignment: ChartDataLabelAlignment.middle,
-                showCumulativeValues: true),
-          ),
-          StackedColumnSeries<ChartData, String>(
-            dataSource: _chartData,
-            xValueMapper: (ChartData data, _) => data.dayOfWeek,
-            yValueMapper: (ChartData data, _) => data.tarde,
-            dataLabelSettings: DataLabelSettings(
-                isVisible: true,
-                labelAlignment: ChartDataLabelAlignment.middle,
-                showCumulativeValues: true),
-          ),
-          StackedColumnSeries<ChartData, String>(
-            dataSource: _chartData,
-            xValueMapper: (ChartData data, _) => data.dayOfWeek,
-            yValueMapper: (ChartData data, _) => data.noite,
-            dataLabelSettings: DataLabelSettings(
-                isVisible: true,
-                labelAlignment: ChartDataLabelAlignment.middle,
-                showCumulativeValues: true),
-          ),
-        ],
-      ),
-    ));
+    return FutureBuilder(
+        future: fluxoMensal,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            _chartData = getChartData(snapshot.data!);
+            return Center(
+              child: SfCartesianChart(
+                title: ChartTitle(text: "Titulo"),
+                legend: Legend(isVisible: true),
+                primaryXAxis: CategoryAxis(),
+                series: <ChartSeries>[
+                  StackedColumnSeries<ChartData, String>(
+                    name: "Manhã",
+                    dataSource: _chartData,
+                    xValueMapper: (ChartData data, _) => data.dayOfWeek,
+                    yValueMapper: (ChartData data, _) => data.manha,
+                    dataLabelSettings: DataLabelSettings(
+                        isVisible: true,
+                        labelAlignment: ChartDataLabelAlignment.middle,
+                        showCumulativeValues: true,
+                        textStyle:
+                            TextStyle(fontSize: 12, color: Colors.black)),
+                  ),
+                  StackedColumnSeries<ChartData, String>(
+                    name: "Meio Dia",
+                    dataSource: _chartData,
+                    xValueMapper: (ChartData data, _) => data.dayOfWeek,
+                    yValueMapper: (ChartData data, _) => data.meioDia,
+                    dataLabelSettings: DataLabelSettings(
+                        isVisible: true,
+                        labelAlignment: ChartDataLabelAlignment.middle,
+                        showCumulativeValues: true),
+                  ),
+                  StackedColumnSeries<ChartData, String>(
+                    name: "Tarde",
+                    dataSource: _chartData,
+                    xValueMapper: (ChartData data, _) => data.dayOfWeek,
+                    yValueMapper: (ChartData data, _) => data.tarde,
+                    dataLabelSettings: DataLabelSettings(
+                        isVisible: true,
+                        labelAlignment: ChartDataLabelAlignment.middle,
+                        showCumulativeValues: true),
+                  ),
+                  StackedColumnSeries<ChartData, String>(
+                    name: "Noite",
+                    dataSource: _chartData,
+                    xValueMapper: (ChartData data, _) => data.dayOfWeek,
+                    yValueMapper: (ChartData data, _) => data.noite,
+                    dataLabelSettings: DataLabelSettings(
+                        isVisible: true,
+                        labelAlignment: ChartDataLabelAlignment.middle,
+                        showCumulativeValues: true),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Text('${snapshot.error}');
+          }
+
+          return CircularProgressIndicator();
+        });
   }
 }
 
-List<ChartData> getChartData() {
+List<ChartData> getChartData(List<FluxoPorTurnoDiario> fluxoMensal) {
   final chartData = [
-    ChartData('Segunda', 20, 30, 10, 15),
-    ChartData('Terça', 10, 40, 20, 20),
-    ChartData('Quarta', 30, 10, 30, 18),
-    ChartData('Quinta', 15, 25, 40, 19),
-    ChartData('Sexta', 25, 20, 50, 40),
+    ChartData('Segunda', fluxoMensal[6].fluxo[0], fluxoMensal[6].fluxo[1],
+        fluxoMensal[6].fluxo[2], fluxoMensal[6].fluxo[3]),
+    ChartData('Terça', fluxoMensal[7].fluxo[0], fluxoMensal[7].fluxo[1],
+        fluxoMensal[7].fluxo[2], fluxoMensal[7].fluxo[3]),
+    ChartData('Quarta', fluxoMensal[8].fluxo[0], fluxoMensal[8].fluxo[1],
+        fluxoMensal[8].fluxo[2], fluxoMensal[8].fluxo[3]),
+    ChartData('Quinta', fluxoMensal[9].fluxo[0], fluxoMensal[9].fluxo[1],
+        fluxoMensal[9].fluxo[2], fluxoMensal[9].fluxo[3]),
+    ChartData('Sexta', fluxoMensal[10].fluxo[0], fluxoMensal[10].fluxo[1],
+        fluxoMensal[10].fluxo[2], fluxoMensal[10].fluxo[3]),
   ];
   return chartData;
 }
 
 class ChartData {
   final String dayOfWeek;
-  final double manha;
-  final double meioDia;
-  final double tarde;
-  final double noite;
+  final int manha;
+  final int meioDia;
+  final int tarde;
+  final int noite;
 
   ChartData(this.dayOfWeek, this.manha, this.meioDia, this.tarde, this.noite);
 }
