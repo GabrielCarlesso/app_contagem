@@ -1,4 +1,4 @@
-name: app_contagem
+name: app_fluxo
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -30,8 +30,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  syncfusion_flutter_charts:
-  http:
+  http: ^0.13.5
+  syncfusion_flutter_charts: ^21.1.41
+syncfusion_flutter_charts:
+http:
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

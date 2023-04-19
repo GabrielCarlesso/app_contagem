@@ -14,12 +14,19 @@ class Services {
       } else {
         print('Erro: Response StatusCode: ${response.statusCode}');
         return FluxoPorTurnoDiario(
-            nomeTurno: [], fluxo: [], cor: [], date: date);
+            nomeTurno: ["Not Found", "Not Found", "Not Found", "Not Found"],
+            fluxo: [0, 0, 0, 0],
+            cor: [],
+            date: date);
       }
     } catch (e) {
       print(e);
 
-      return FluxoPorTurnoDiario(nomeTurno: [], fluxo: [], cor: [], date: date);
+      return FluxoPorTurnoDiario(
+          nomeTurno: ["Not Found", "Not Found", "Not Found", "Not Found"],
+          fluxo: [0, 0, 0, 0],
+          cor: [],
+          date: date);
     }
   }
 

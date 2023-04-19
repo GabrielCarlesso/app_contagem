@@ -1,4 +1,6 @@
-import 'package:app_contagem/FluxoPorTurnoDiario.dart';
+import 'package:app_fluxo/NavigationDrawerWidget.dart';
+
+import '../FluxoPorTurnoDiario.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -25,68 +27,71 @@ class _MyPageMonthlyGraph extends State<PageMonthlyGraph> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: fluxoMensal,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            _chartData = getChartData(snapshot.data!);
-            return Center(
-              child: SfCartesianChart(
-                title: ChartTitle(text: "Titulo"),
-                legend: Legend(isVisible: true),
-                primaryXAxis: CategoryAxis(),
-                series: <ChartSeries>[
-                  StackedColumnSeries<ChartData, String>(
-                    name: "Manhã",
-                    dataSource: _chartData,
-                    xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                    yValueMapper: (ChartData data, _) => data.manha,
-                    dataLabelSettings: DataLabelSettings(
-                        isVisible: true,
-                        labelAlignment: ChartDataLabelAlignment.middle,
-                        showCumulativeValues: true,
-                        textStyle:
-                            TextStyle(fontSize: 12, color: Colors.black)),
+    return Scaffold(
+        drawer: NavigationDrawerWidget(),
+        appBar: AppBar(title: Text("Grafico mensal")),
+        body: FutureBuilder(
+            future: fluxoMensal,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                _chartData = getChartData(snapshot.data!);
+                return Center(
+                  child: SfCartesianChart(
+                    title: ChartTitle(text: "Titulo"),
+                    legend: Legend(isVisible: true),
+                    primaryXAxis: CategoryAxis(),
+                    series: <ChartSeries>[
+                      StackedColumnSeries<ChartData, String>(
+                        name: "Manhã",
+                        dataSource: _chartData,
+                        xValueMapper: (ChartData data, _) => data.dayOfWeek,
+                        yValueMapper: (ChartData data, _) => data.manha,
+                        dataLabelSettings: DataLabelSettings(
+                            isVisible: true,
+                            labelAlignment: ChartDataLabelAlignment.middle,
+                            showCumulativeValues: true,
+                            textStyle:
+                                TextStyle(fontSize: 12, color: Colors.black)),
+                      ),
+                      StackedColumnSeries<ChartData, String>(
+                        name: "Meio Dia",
+                        dataSource: _chartData,
+                        xValueMapper: (ChartData data, _) => data.dayOfWeek,
+                        yValueMapper: (ChartData data, _) => data.meioDia,
+                        dataLabelSettings: DataLabelSettings(
+                            isVisible: true,
+                            labelAlignment: ChartDataLabelAlignment.middle,
+                            showCumulativeValues: true),
+                      ),
+                      StackedColumnSeries<ChartData, String>(
+                        name: "Tarde",
+                        dataSource: _chartData,
+                        xValueMapper: (ChartData data, _) => data.dayOfWeek,
+                        yValueMapper: (ChartData data, _) => data.tarde,
+                        dataLabelSettings: DataLabelSettings(
+                            isVisible: true,
+                            labelAlignment: ChartDataLabelAlignment.middle,
+                            showCumulativeValues: true),
+                      ),
+                      StackedColumnSeries<ChartData, String>(
+                        name: "Noite",
+                        dataSource: _chartData,
+                        xValueMapper: (ChartData data, _) => data.dayOfWeek,
+                        yValueMapper: (ChartData data, _) => data.noite,
+                        dataLabelSettings: DataLabelSettings(
+                            isVisible: true,
+                            labelAlignment: ChartDataLabelAlignment.middle,
+                            showCumulativeValues: true),
+                      ),
+                    ],
                   ),
-                  StackedColumnSeries<ChartData, String>(
-                    name: "Meio Dia",
-                    dataSource: _chartData,
-                    xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                    yValueMapper: (ChartData data, _) => data.meioDia,
-                    dataLabelSettings: DataLabelSettings(
-                        isVisible: true,
-                        labelAlignment: ChartDataLabelAlignment.middle,
-                        showCumulativeValues: true),
-                  ),
-                  StackedColumnSeries<ChartData, String>(
-                    name: "Tarde",
-                    dataSource: _chartData,
-                    xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                    yValueMapper: (ChartData data, _) => data.tarde,
-                    dataLabelSettings: DataLabelSettings(
-                        isVisible: true,
-                        labelAlignment: ChartDataLabelAlignment.middle,
-                        showCumulativeValues: true),
-                  ),
-                  StackedColumnSeries<ChartData, String>(
-                    name: "Noite",
-                    dataSource: _chartData,
-                    xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                    yValueMapper: (ChartData data, _) => data.noite,
-                    dataLabelSettings: DataLabelSettings(
-                        isVisible: true,
-                        labelAlignment: ChartDataLabelAlignment.middle,
-                        showCumulativeValues: true),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return Text('${snapshot.error}');
-          }
+                );
+              } else {
+                return Text('${snapshot.error}');
+              }
 
-          return CircularProgressIndicator();
-        });
+              return CircularProgressIndicator();
+            }));
   }
 }
 

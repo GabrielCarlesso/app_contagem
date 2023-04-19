@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.app_contagem">
+    package="com.example.app_fluxo">
    <application
-        android:label="app_contagem"
+        android:label="app_fluxo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

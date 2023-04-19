@@ -22,36 +22,39 @@ class _MyDiarioPageState extends State<DiarioPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Row(children: [
-        Text(_day.toString()),
-        IconButton(
-            icon: Icon(Icons.date_range),
-            onPressed: () {
-              showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(2018),
-                lastDate: DateTime(2025),
-              ).then((value) {
-                setState(() {
-                  _day = value!;
-                  futureTurno = Services().getFluxo(_day);
-                });
-              });
-            }),
-      ]),
-      FutureBuilder<FluxoPorTurnoDiario>(
-          future: futureTurno,
-          builder: (context, turno) {
-            if (turno.hasData) {
-              return Text('${turno.data!.nomeTurno} : ${turno.data!.fluxo}');
-            } else if (turno.hasError) {
-              return Text('${turno.error}');
-            }
-            // By default, show a loading spinner.
-            return const CircularProgressIndicator();
-          })
-    ]);
+    return Scaffold(
+        appBar: AppBar(title: Text("Diario")),
+        body: Column(children: [
+          Row(children: [
+            Text(_day.toString()),
+            IconButton(
+                icon: Icon(Icons.date_range),
+                onPressed: () {
+                  showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2018),
+                    lastDate: DateTime(2025),
+                  ).then((value) {
+                    setState(() {
+                      _day = value!;
+                      futureTurno = Services().getFluxo(_day);
+                    });
+                  });
+                }),
+          ]),
+          FutureBuilder<FluxoPorTurnoDiario>(
+              future: futureTurno,
+              builder: (context, turno) {
+                if (turno.hasData) {
+                  return Text(
+                      '${turno.data!.nomeTurno} : ${turno.data!.fluxo}');
+                } else if (turno.hasError) {
+                  return Text('${turno.error}');
+                }
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              })
+        ]));
   }
 }

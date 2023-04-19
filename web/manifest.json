@@ -1,6 +1,6 @@
 {
-    "name": "app_contagem",
-    "short_name": "app_contagem",
+    "name": "app_fluxo",
+    "short_name": "app_fluxo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
