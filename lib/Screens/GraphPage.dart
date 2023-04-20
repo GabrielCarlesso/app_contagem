@@ -29,87 +29,92 @@ class _GraphPage extends State<GraphPage> {
             primaryXAxis: CategoryAxis(),
             legend: Legend(isVisible: true),
             series: <ChartSeries>[
-              StackedColumnSeries<ChartData, String>(
-                groupName: 'Cafe',
-                name: "Café 6:50 - 7:20",
-                dataSource: _chartData,
-                xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) =>
-                    data.fluxo_ru_mensal["Café 6:50 - 7:20"],
-                dataLabelSettings: const DataLabelSettings(
-                    isVisible: true,
-                    labelAlignment: ChartDataLabelAlignment.middle,
-                    showCumulativeValues: true,
-                    textStyle: TextStyle(fontSize: 12, color: Colors.black)),
-              ),
-              StackedColumnSeries<ChartData, String>(
-                groupName: 'Cafe',
-                name: "Café 7:20 - 7:50",
-                dataSource: _chartData,
-                xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) =>
-                    data.fluxo_ru_mensal["Café 7:20 - 7:50"],
-                dataLabelSettings: const DataLabelSettings(
-                    isVisible: true,
-                    labelAlignment: ChartDataLabelAlignment.middle,
-                    showCumulativeValues: true,
-                    textStyle: TextStyle(fontSize: 12, color: Colors.black)),
-              ),
-              StackedColumnSeries<ChartData, String>(
-                groupName: 'Almoco',
-                name: "Almoço 10:45 - 11:15",
-                dataSource: _chartData,
-                xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) =>
-                    data.fluxo_ru_mensal["Almoço 10:45 - 11:15"],
-                dataLabelSettings: const DataLabelSettings(
-                    isVisible: true,
-                    labelAlignment: ChartDataLabelAlignment.middle,
-                    showCumulativeValues: true,
-                    textStyle: TextStyle(fontSize: 12, color: Colors.black)),
-              ),
-              StackedColumnSeries<ChartData, String>(
-                groupName: 'Almoco',
-                name: "Almoço 11:15 - 11:45",
-                dataSource: _chartData,
-                xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) =>
-                    data.fluxo_ru_mensal["Almoço 11:15 - 11:45"],
-                dataLabelSettings: const DataLabelSettings(
-                    isVisible: true,
-                    labelAlignment: ChartDataLabelAlignment.middle,
-                    showCumulativeValues: true,
-                    textStyle: TextStyle(fontSize: 12, color: Colors.black)),
-              ),
-              StackedColumnSeries<ChartData, String>(
-                groupName: 'Janta',
-                name: "Janta 17:45 - 18:15",
-                dataSource: _chartData,
-                xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) =>
-                    data.fluxo_ru_mensal["Janta 17:45 - 18:15"],
-                dataLabelSettings: const DataLabelSettings(
-                    isVisible: true,
-                    labelAlignment: ChartDataLabelAlignment.middle,
-                    showCumulativeValues: true,
-                    textStyle: TextStyle(fontSize: 12, color: Colors.black)),
-              ),
-              StackedColumnSeries<ChartData, String>(
-                groupName: 'Janta',
-                name: "Janta 18:15 - 18:45",
-                dataSource: _chartData,
-                xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) =>
-                    data.fluxo_ru_mensal["Janta 18:15 - 18:45"],
-                dataLabelSettings: const DataLabelSettings(
-                    isVisible: true,
-                    labelAlignment: ChartDataLabelAlignment.middle,
-                    showCumulativeValues: true,
-                    textStyle: TextStyle(fontSize: 12, color: Colors.black)),
-              ),
+              //Series Café
+              barSeriesGraph(
+                  groupName: "Cafe",
+                  turno: "Café 6:50 - 7:20",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(27, 70, 250, 98)),
+              barSeriesGraph(
+                  groupName: "Cafe",
+                  turno: "Café 7:20 - 7:50",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(59, 219, 188, 86)),
+              barSeriesGraph(
+                  groupName: "Cafe",
+                  turno: "Café 7:50 - 8:40",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(118, 239, 64, 94)),
+              //Series Almoço
+              barSeriesGraph(
+                  groupName: "Almoco",
+                  turno: "Almoço 10:45 - 11:15",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(27, 70, 250, 98)),
+              barSeriesGraph(
+                  groupName: "Almoco",
+                  turno: "Almoço 11:15 - 11:45",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(59, 219, 188, 86)),
+              barSeriesGraph(
+                  groupName: "Almoco",
+                  turno: "Almoço 11:45 - 12:15",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(118, 239, 64, 94)),
+              barSeriesGraph(
+                  groupName: "Almoco",
+                  turno: "Almoço 12:15 - 12:45",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(217, 186, 48, 85)),
+              barSeriesGraph(
+                  groupName: "Almoco",
+                  turno: "Almoço 13:15 - 13:45",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(252, 130, 56, 99)),
+              //Series Janta
+              barSeriesGraph(
+                  groupName: "Janta",
+                  turno: "Janta 17:45 - 18:15",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(27, 70, 250, 98)),
+              barSeriesGraph(
+                  groupName: "Janta",
+                  turno: "Janta 18:15 - 18:45",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(59, 219, 188, 86)),
+              barSeriesGraph(
+                  groupName: "Janta",
+                  turno: "Janta 18:45 - 19:15",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(118, 239, 64, 94)),
+              barSeriesGraph(
+                  groupName: "Janta",
+                  turno: "Janta 19:15 - 19:45",
+                  dataSource: _chartData,
+                  color: const Color.fromRGBO(217, 186, 48, 85)),
             ],
           ),
         ));
+  }
+
+  StackedColumnSeries<ChartData, String> barSeriesGraph(
+      {required String groupName,
+      required String turno,
+      required var dataSource,
+      required var color}) {
+    return StackedColumnSeries<ChartData, String>(
+      groupName: groupName,
+      name: turno,
+      dataSource: dataSource,
+      color: color,
+      xValueMapper: (ChartData data, _) => data.dayOfWeek,
+      yValueMapper: (ChartData data, _) => data.fluxo_ru_mensal[turno],
+      dataLabelSettings: const DataLabelSettings(
+        isVisible: true,
+        labelAlignment: ChartDataLabelAlignment.middle,
+        textStyle: TextStyle(fontSize: 12, color: Colors.black),
+      ),
+    );
   }
 }
 
@@ -158,9 +163,18 @@ class ChartData {
       required this.janta}) {
     fluxo_ru_mensal["Café 6:50 - 7:20"] = cafe[0];
     fluxo_ru_mensal["Café 7:20 - 7:50"] = cafe[1];
+    fluxo_ru_mensal["Café 7:50 - 8:40"] = cafe[2];
+
     fluxo_ru_mensal["Almoço 10:45 - 11:15"] = almoco[0];
     fluxo_ru_mensal["Almoço 11:15 - 11:45"] = almoco[1];
+    fluxo_ru_mensal["Almoço 11:45 - 12:15"] = almoco[2];
+    fluxo_ru_mensal["Almoço 12:15 - 12:45"] = almoco[3];
+    fluxo_ru_mensal["Almoço 12:45 - 13:45"] = almoco[3];
+    fluxo_ru_mensal["Almoço 13:15 - 13:45"] = almoco[3];
+
     fluxo_ru_mensal["Janta 17:45 - 18:15"] = janta[0];
     fluxo_ru_mensal["Janta 18:15 - 18:45"] = janta[1];
+    fluxo_ru_mensal["Janta 18:45 - 19:15"] = janta[2];
+    fluxo_ru_mensal["Janta 19:15 - 19:45"] = janta[3];
   }
 }
