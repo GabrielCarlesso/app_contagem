@@ -31,10 +31,11 @@ class _GraphPage extends State<GraphPage> {
             series: <ChartSeries>[
               StackedColumnSeries<ChartData, String>(
                 groupName: 'Cafe',
-                name: "Café 6:30 - 7:00",
+                name: "Café 6:50 - 7:20",
                 dataSource: _chartData,
                 xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) => data.cafe[0],
+                yValueMapper: (ChartData data, _) =>
+                    data.fluxo_ru_mensal["Café 6:50 - 7:20"],
                 dataLabelSettings: const DataLabelSettings(
                     isVisible: true,
                     labelAlignment: ChartDataLabelAlignment.middle,
@@ -43,10 +44,11 @@ class _GraphPage extends State<GraphPage> {
               ),
               StackedColumnSeries<ChartData, String>(
                 groupName: 'Cafe',
-                name: "Café 7:00 - 7:30",
+                name: "Café 7:20 - 7:50",
                 dataSource: _chartData,
                 xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) => data.cafe[1],
+                yValueMapper: (ChartData data, _) =>
+                    data.fluxo_ru_mensal["Café 7:20 - 7:50"],
                 dataLabelSettings: const DataLabelSettings(
                     isVisible: true,
                     labelAlignment: ChartDataLabelAlignment.middle,
@@ -58,7 +60,8 @@ class _GraphPage extends State<GraphPage> {
                 name: "Almoço 10:45 - 11:15",
                 dataSource: _chartData,
                 xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) => data.almoco[0],
+                yValueMapper: (ChartData data, _) =>
+                    data.fluxo_ru_mensal["Almoço 10:45 - 11:15"],
                 dataLabelSettings: const DataLabelSettings(
                     isVisible: true,
                     labelAlignment: ChartDataLabelAlignment.middle,
@@ -70,7 +73,8 @@ class _GraphPage extends State<GraphPage> {
                 name: "Almoço 11:15 - 11:45",
                 dataSource: _chartData,
                 xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) => data.almoco[1],
+                yValueMapper: (ChartData data, _) =>
+                    data.fluxo_ru_mensal["Almoço 11:15 - 11:45"],
                 dataLabelSettings: const DataLabelSettings(
                     isVisible: true,
                     labelAlignment: ChartDataLabelAlignment.middle,
@@ -82,7 +86,8 @@ class _GraphPage extends State<GraphPage> {
                 name: "Janta 17:45 - 18:15",
                 dataSource: _chartData,
                 xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) => data.janta[0],
+                yValueMapper: (ChartData data, _) =>
+                    data.fluxo_ru_mensal["Janta 17:45 - 18:15"],
                 dataLabelSettings: const DataLabelSettings(
                     isVisible: true,
                     labelAlignment: ChartDataLabelAlignment.middle,
@@ -94,7 +99,8 @@ class _GraphPage extends State<GraphPage> {
                 name: "Janta 18:15 - 18:45",
                 dataSource: _chartData,
                 xValueMapper: (ChartData data, _) => data.dayOfWeek,
-                yValueMapper: (ChartData data, _) => data.janta[1],
+                yValueMapper: (ChartData data, _) =>
+                    data.fluxo_ru_mensal["Janta 18:15 - 18:45"],
                 dataLabelSettings: const DataLabelSettings(
                     isVisible: true,
                     labelAlignment: ChartDataLabelAlignment.middle,
@@ -111,7 +117,7 @@ List<ChartData> getChartData() {
   final chartData = [
     ChartData(
         dayOfWeek: 'Segunda',
-        cafe: [20, 30, 10, 15],
+        cafe: [15, 15, 10, 15],
         almoco: [10, 10, 10, 10],
         janta: [10, 10, 10, 10]),
     ChartData(
@@ -141,13 +147,20 @@ List<ChartData> getChartData() {
 class ChartData {
   final String dayOfWeek;
   late List<int> cafe;
+  Map<String, int> fluxo_ru_mensal = Map();
   late List<int> almoco;
   late List<int> janta;
 
-  ChartData({
-    required this.dayOfWeek,
-    required this.cafe,
-    required this.almoco,
-    required this.janta,
-  });
+  ChartData(
+      {required this.dayOfWeek,
+      required this.cafe,
+      required this.almoco,
+      required this.janta}) {
+    fluxo_ru_mensal["Café 6:50 - 7:20"] = cafe[0];
+    fluxo_ru_mensal["Café 7:20 - 7:50"] = cafe[1];
+    fluxo_ru_mensal["Almoço 10:45 - 11:15"] = almoco[0];
+    fluxo_ru_mensal["Almoço 11:15 - 11:45"] = almoco[1];
+    fluxo_ru_mensal["Janta 17:45 - 18:15"] = janta[0];
+    fluxo_ru_mensal["Janta 18:15 - 18:45"] = janta[1];
+  }
 }
